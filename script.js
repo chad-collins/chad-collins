@@ -1,5 +1,5 @@
 (async function loadGallery() {
-
+  // Your GitHub details
   const username = 'chad-collins';
   const repo = 'chad-collins.github.io';
   const branch = 'main';
@@ -12,11 +12,12 @@
     const items = await res.json();
     const gallery = document.getElementById('gallery');
 
+    // Use the API's download_url directly for each image
     items
       .filter(item => /\.(jpe?g|png|gif|webp)$/i.test(item.name))
       .forEach(item => {
         const img = document.createElement('img');
-        img.src = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/images/${item.name}`;
+        img.src = item.download_url; // direct link to raw file
         img.alt = item.name;
         gallery.appendChild(img);
       });
