@@ -1,27 +1,27 @@
 (async function loadGallery() {
-  // Your GitHub details
   const username = 'chad-collins';
-  const repo = 'chad-collins.github.io';
-  const branch = 'main';
+  const repo     = 'chad-collins.github.io';
+  const branch   = 'main';
+  const apiUrl   = `https://api.github.com/repos/${username}/${repo}/contents/images?ref=${branch}`;
 
-  const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/images?ref=${branch}`;
-
+  console.log('→ Fetching image list from:', apiUrl);
   try {
     const res = await fetch(apiUrl);
-    if (!res.ok) throw new Error(`Error fetching list: ${res.statusText}`);
+    console.log('← GitHub API status:', res.status);
+    if (!res.ok) throw new Error(`Fetch failed: ${res.statusText}`);
     const items = await res.json();
-    const gallery = document.getElementById('gallery');
+    console.log('← Items returned:', items);
 
-    // Use the API's download_url directly for each image
+    const gallery = document.getElementById('gallery');
     items
-      .filter(item => /\.(jpe?g|png|gif|webp)$/i.test(item.name))
-      .forEach(item => {
+      .filter(i => /\.(jpe?g|png|gif|webp)$/i.test(i.name))
+      .forEach(i => {
         const img = document.createElement('img');
-        img.src = item.download_url; // direct link to raw file
-        img.alt = item.name;
+        img.src = i.download_url;
+        img.alt = i.name;
         gallery.appendChild(img);
       });
   } catch (err) {
-    console.error(err);
+    console.error('Gallery load error:', err);
   }
 })();
