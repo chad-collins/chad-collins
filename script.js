@@ -1,6 +1,6 @@
 (async function loadGallery() {
   const username = 'chad-collins';
-  const repo = 'boxofnothings';
+  const repo = 'chad-collins.github.io';
   const branch = 'main';
 
   const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/images?ref=${branch}`;
